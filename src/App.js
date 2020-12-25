@@ -2,13 +2,17 @@ import React from 'react';
 import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
 import './App.css';
+import LoginForm from './components/login-form/LoginForm';
+import Register from './components/register-form/RegisterForm';
 
 function App() {
   return (
     <div className="App">
+      <Register />
+      <LoginForm />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
+        <LoginForm />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>

@@ -12,7 +12,7 @@ function App() {
   return (
     <Router>
       <Layout>
-        <CustomHeader activeIndex='1' isLogin={true}/>
+        <CustomHeader activeIndex='1' isLogin={false}/>
         <Switch>
           <Route exact path="/" component={Home}>
           </Route>

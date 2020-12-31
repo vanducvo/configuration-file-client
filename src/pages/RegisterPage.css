@@ -1,0 +1,11 @@
+.register-content {
+  max-width: 768px !important;
+  margin: auto;
+  padding: 30px;
+  background-color: whitesmoke;
+}
+
+.register-container {
+  padding: 20px;
+  background-color: white;
+}

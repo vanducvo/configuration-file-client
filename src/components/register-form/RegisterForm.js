@@ -1,14 +1,25 @@
-import React from 'react';
-import {Form, Input, Button} from 'antd';
+import React, { useState } from 'react';
+import { Form, Input, Button } from 'antd';
 import 'antd/dist/antd.css';
 
-function Register() {
+function RegisterForm() {
+  const [usernameStatus, setUsernameStatus ] = useState("");
+  
+  function setLoading() {
+    setUsernameStatus("validating");
+  }
+
+  function checkUsernameExists(e){
+    console.log(e.target.value);
+    setUsernameStatus("success");
+  }
+
   return (
     <Form
       layout="vertical"
-      name="login"
-      onFinish={() => {}}
-      onFinishFailed={() => {}}
+      name="register"
+      onFinish={() => { }}
+      onFinishFailed={() => { }}
     >
       <Form.Item
         label="Username"
@@ -18,9 +29,20 @@ function Register() {
             required: true,
             message: 'Please input your username!',
           },
+          () => ({
+            validator(rule, value){
+              if(usernameStatus === "error"){
+                return Promise.reject("Username Exists! Please choose another name.");
+              }
+
+              return Promise.resolve();
+            }
+          })
         ]}
+        validateStatus={usernameStatus}
+        hasFeedback
       >
-        <Input />
+        <Input onChange={setLoading} onBlur={checkUsernameExists}/>
       </Form.Item>
 
       <Form.Item
@@ -32,19 +54,31 @@ function Register() {
             message: 'Please input your password!',
           },
         ]}
+        hasFeedback
       >
         <Input.Password />
       </Form.Item>
 
       <Form.Item
         label="Confirm Password"
-        name="confirm-password"
+        name="confirm"
+        dependencies={['password']}
         rules={[
           {
             required: true,
-            message: 'Please input your password!',
+            message: 'Please confirm your password!',
           },
+          ({ getFieldValue }) => ({
+            validator(rule, value) {
+              if (!value || getFieldValue('password') === value) {
+                return Promise.resolve();
+              }
+
+              return Promise.reject('The two passwords that you entered do not match');
+            }
+          })
         ]}
+        hasFeedback
       >
         <Input.Password />
       </Form.Item>
@@ -58,4 +92,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default RegisterForm;
